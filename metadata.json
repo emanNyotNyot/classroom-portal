@@ -1,0 +1,5 @@
+{
+  "name": "Classroom Portal",
+  "description": "A fully functional login app for students and lecturers to manage classes and student information.",
+  "requestFramePermissions": []
+}
