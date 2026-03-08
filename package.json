@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "tsx server.ts",
     "build": "vite build",
-    "build:server": "tsc server.ts --esModuleInterop --module nodenext --moduleResolution nodenext --target es2022 --outDir dist-server",
-    "start": "node dist-server/server.js",
+    "start": "NODE_ENV=production tsx server.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist dist-server",
     "lint": "tsc --noEmit"

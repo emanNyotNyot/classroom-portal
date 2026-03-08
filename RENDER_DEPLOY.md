@@ -21,7 +21,7 @@ The application was exiting early because:
    - Click "New +" → "Web Service"
    - Connect your GitHub repository
    - Configure the following settings:
-     - **Build Command**: `npm run build && npm run build:server`
+     - **Build Command**: `npm run build`
      - **Start Command**: `npm run start`
      - **Environment**: `Node`
      - **Node Version**: `20` (or your preferred version)
@@ -43,7 +43,7 @@ services:
   - type: web
     name: classroom-portal
     env: node
-    buildCommand: npm run build && npm run build:server
+    buildCommand: npm run build
     startCommand: npm run start
     envVars:
       - key: NODE_ENV
@@ -58,11 +58,11 @@ services:
 
 ## Important Notes
 
-1. **Build Process**: The deployment will:
-   - First run `npm run build` to build the React frontend (creates `dist` folder)
-   - Then run `npm run build:server` to compile the TypeScript server (creates `dist-server` folder)
+1. **Build Process**: The deployment will run `npm run build` to build the React frontend (creates `dist` folder). The server runs directly from TypeScript using tsx, so no separate server build is needed.
 
-2. **Cookie Settings**: For production, you may need to update the cookie settings in `server.ts` if your frontend and backend are on different domains:
+2. **Server runs on PORT**: The server.ts uses `process.env.PORT` which Render automatically provides. Make sure your server is listening on this port.
+
+3. **Cookie Settings**: For production, you may need to update the cookie settings in `server.ts` if your frontend and backend are on different domains:
    ```typescript
    res.cookie('token', token, { 
      httpOnly: true, 
@@ -72,5 +72,5 @@ services:
    });
    ```
 
-3. **CORS**: If you have CORS issues in production, you may need to add CORS middleware to Express.
+4. **CORS**: If you have CORS issues in production, you may need to add CORS middleware to Express.
 
