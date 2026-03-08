@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+<<<<<<< HEAD
   "scripts": {
     "dev": "tsx server.ts",
     "build": "vite build",
@@ -12,6 +13,14 @@
     "clean": "rm -rf dist dist-server",
     "lint": "tsc --noEmit"
   },
+=======
+ "scripts": {
+  "dev": "tsx server.ts",
+  "build": "vite build",
+  "preview": "vite preview",
+  "start": "NODE_ENV=production tsx server.ts"
+},
+>>>>>>> 000376e96e0d8f110ae470026bed1fc42c397e50
   "dependencies": {
     "@google/genai": "^1.29.0",
     "@supabase/supabase-js": "^2.98.0",
