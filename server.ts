@@ -4,8 +4,11 @@ import cookieParser from 'cookie-parser';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { createClient } from '@supabase/supabase-js';
+import path from 'path';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key-for-dev';
+
+const port = process.env.PORT ||8080;
 
 // Initialize Supabase client
 const supabaseUrl = process.env.SUPABASE_URL || 'https://upmtdyxdiripnzcdlsng.supabase.co';
@@ -21,7 +24,8 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  // Use the PORT environment variable (Render provides this), fallback to 3000
+  const PORT = parseInt(process.env.PORT || process.env.port || '3000', 10);
 
   app.use(express.json());
   app.use(cookieParser());
@@ -271,7 +275,7 @@ async function startServer() {
         .delete()
         .eq('id', studentId)
         .ilike('role', 'student')
-        .ilike('class_name', `%${cleanClassName}%`)
+        .ilike('class_name', cleanClassName)
         .select();
         
       console.log('Delete response:', { data, error });
@@ -296,7 +300,15 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    app.use(express.static('dist'));
+    // In production, the compiled server is in dist-server, so we need to go up to find dist
+    const distPath = path.join(__dirname, '..', 'dist');
+    // Serve static files from dist folder
+    app.use(express.static(distPath));
+    
+    // Handle SPA routing - serve index.html for all routes
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
   }
 
   app.listen(PORT, '0.0.0.0', () => {

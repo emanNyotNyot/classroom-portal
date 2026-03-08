@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "tsx server.ts",
     "build": "vite build",
+    "build:server": "tsc server.ts --esModuleInterop --module nodenext --moduleResolution nodenext --target es2022 --outDir dist-server",
+    "start": "node --experimental-specifier-resolution=node dist-server/server.js",
     "preview": "vite preview",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist dist-server",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
