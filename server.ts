@@ -8,7 +8,7 @@ import path from 'path';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key-for-dev';
 
-const port = process.env.PORT ||8080;
+// Note: PORT is defined inside startServer() function using process.env.PORT
 
 // Initialize Supabase client
 const supabaseUrl = process.env.SUPABASE_URL || 'https://upmtdyxdiripnzcdlsng.supabase.co';
